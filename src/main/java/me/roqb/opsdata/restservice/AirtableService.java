@@ -72,8 +72,12 @@ public class AirtableService {
             result = new Root();
             result.records = new ArrayList<>();
             for (TypeRecord record : response.getBody().records) {
-                if (record.fields.tags == null || (!isSpeculation(record) && (includeCommunity && isCommunity(record)))) {
-                    // Only add records if there are no tags, or the tags are no
+                if (record.fields.tags == null || includeCommunity || !isCommunity(record)) {
+                    /*
+                     * Only add records if:
+                     * 1) there are no tags
+                     * 2) or if has tags, but no community tag when includeCommunity=false
+                     */
                     result.records.add(record);
                 }
             }
