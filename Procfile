@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT -jar build/libs/ops-data-service.jar
+web: java -Dserver.port=$PORT -jar build/libs/ops-data-service-0.0.1.jar

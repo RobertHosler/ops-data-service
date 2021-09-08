@@ -4,8 +4,8 @@ plugins {
     id 'java'
 }
 
-group 'org.example'
-version '1.0-SNAPSHOT'
+group 'me.roqb'
+version '0.0.1'
 
 repositories {
     mavenCentral()
@@ -36,6 +36,18 @@ afterEvaluate {
     }
 }
 
-task stage {
-    dependsOn build
-}
+//task stage(type: Copy, dependsOn: [clean, build]) {
+//    from jar.archiveFile
+//    into project.rootDir
+//    rename {
+//        'ops-data-service-0.0.3.jar'
+//    }
+//}
+//
+//clean  {
+//    doLast {
+//        project.file('ops-data-service-0.0.2.jar').delete()
+//    }
+//}
+
+//stage.mustRunAfter(clean)
