@@ -29,8 +29,13 @@ test {
     useJUnitPlatform()
 }
 
+
 afterEvaluate {
     bootRun {
         args = ["--spring.profiles.active=local"]
     }
+}
+
+task stage {
+    dependsOn build
 }
