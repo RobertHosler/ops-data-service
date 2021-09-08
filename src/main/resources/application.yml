@@ -1,0 +1,3 @@
+airtable:
+  endpoint: https://api.airtable.com/v0/appudq0aG1uwqIFX5/
+  api-key: pulledFromHerokuConfig

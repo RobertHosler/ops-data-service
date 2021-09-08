@@ -26,7 +26,8 @@ public class AirtableController {
 			@RequestParam(value = "maxRecords", defaultValue = "5") String maxRecords,
 			@RequestParam(value = "s1", defaultValue = "Fe") String saviorOne,
 			@RequestParam(value = "s2", defaultValue = "Se") String saviorTwo,
-			@RequestParam(value = "as", defaultValue = "PC/S(B)") String animalStack) {
-		return airtableService.getAirtableRecords(maxRecords, saviorOne, saviorTwo, animalStack);
+			@RequestParam(value = "as", defaultValue = "PC/S(B)") String animalStack,
+			@RequestParam(value = "cm", defaultValue = "false") boolean includeCommunity) {
+		return airtableService.getAirtableRecords(maxRecords, saviorOne, saviorTwo, animalStack, includeCommunity);
 	}
 }

@@ -17,3 +17,5 @@ README.html
 *.iml
 .idea
 .mvn
+
+application-local.yml
