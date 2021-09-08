@@ -29,25 +29,8 @@ test {
     useJUnitPlatform()
 }
 
-
 afterEvaluate {
     bootRun {
         args = ["--spring.profiles.active=local"]
     }
 }
-
-//task stage(type: Copy, dependsOn: [clean, build]) {
-//    from jar.archiveFile
-//    into project.rootDir
-//    rename {
-//        'ops-data-service-0.0.3.jar'
-//    }
-//}
-//
-//clean  {
-//    doLast {
-//        project.file('ops-data-service-0.0.2.jar').delete()
-//    }
-//}
-
-//stage.mustRunAfter(clean)
