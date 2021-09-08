@@ -1,4 +1,4 @@
-package com.example.restservice;
+package me.roqb.opsdata.restservice;
 
 public class Greeting {
 

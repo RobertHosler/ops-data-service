@@ -1,6 +1,6 @@
-package com.example.restservice.entity;
+package me.roqb.opsdata.restservice.entity;
 
-import com.example.restservice.entity.picture.Picture;
+import me.roqb.opsdata.restservice.entity.picture.Picture;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;

@@ -1,8 +1,8 @@
-package com.example.restservice;
+package me.roqb.opsdata.restservice;
 
-import com.example.restservice.entity.Root;
-import com.example.restservice.entity.TypeRecord;
-import com.example.restservice.settings.AirtableSettings;
+import me.roqb.opsdata.restservice.entity.Root;
+import me.roqb.opsdata.restservice.entity.TypeRecord;
+import me.roqb.opsdata.restservice.settings.AirtableSettings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;

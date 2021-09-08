@@ -1,4 +1,4 @@
-package com.example.restservice.entity.picture;
+package me.roqb.opsdata.restservice.entity.picture;
 
 public class Large{
     public String url;

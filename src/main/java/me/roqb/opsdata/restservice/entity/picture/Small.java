@@ -1,4 +1,4 @@
-package com.example.restservice.entity.picture;
+package me.roqb.opsdata.restservice.entity.picture;
 
 public class Small{
     public String url;

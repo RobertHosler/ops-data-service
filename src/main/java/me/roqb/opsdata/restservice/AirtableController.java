@@ -1,6 +1,4 @@
-package com.example.restservice;
-
-import java.util.concurrent.atomic.AtomicLong;
+package me.roqb.opsdata.restservice;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;

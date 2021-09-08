@@ -1,4 +1,4 @@
-package com.example.restservice.settings;
+package me.roqb.opsdata.restservice.settings;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

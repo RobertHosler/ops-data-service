@@ -1,4 +1,4 @@
-package com.example.restservice.entity;
+package me.roqb.opsdata.restservice.entity;
 
 import java.util.List;
 

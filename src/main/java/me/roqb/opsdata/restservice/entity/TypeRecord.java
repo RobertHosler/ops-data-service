@@ -1,6 +1,4 @@
-package com.example.restservice.entity;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
+package me.roqb.opsdata.restservice.entity;
 
 import java.util.Date;
 
