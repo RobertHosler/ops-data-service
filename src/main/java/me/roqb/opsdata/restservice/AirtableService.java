@@ -72,8 +72,8 @@ public class AirtableService {
         variables.put("view", VIEW);
         variables.put("maxRecords", maxRecords);
         variables.put("nameLabel", "{Name}");
-        variables.put("nameValue", name);
-        String formula = "FIND('{nameValue}', {nameLabel})";
+        variables.put("nameValue", name != null ? name.toUpperCase() : "");
+        String formula = "FIND('{nameValue}', UPPER({nameLabel}))";
         String url = LIST_URL + PICTURE_FIELDS_PARAMS + "&filterByFormula=" + formula;
         ResponseEntity<Root> response = restTemplate.exchange(
                 url,
