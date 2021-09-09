@@ -32,7 +32,7 @@ public class AirtableController {
 
 	@CrossOrigin(origins = {"http://localhost:4200", "http://app.subjectivepersonality.com"})
 	@GetMapping("/tenCoins")
-	public Object opsRecords(
+	public Object tenCoins(
 			@RequestParam(value = "maxRecords", defaultValue = "5") String maxRecords,
 			@RequestParam(value = "hn1", defaultValue = "") String needOne, // Observer vs Decider
 			@RequestParam(value = "ohn", defaultValue = "") String observerNeed,
@@ -61,10 +61,19 @@ public class AirtableController {
 
 	@CrossOrigin(origins = {"http://localhost:4200", "http://app.subjectivepersonality.com"})
 	@GetMapping("/name")
-	public Object opsRecords(
+	public Object opsRecordName(
 			@RequestParam(value = "maxRecords", defaultValue = "5") String maxRecords,
 			@RequestParam(value = "name", defaultValue = "") String nameString,
 			@RequestParam(value = "cm", defaultValue = "false") boolean includeCommunity) {
 		return airtableService.getAirtableRecordsByName(maxRecords, nameString, includeCommunity);
+	}
+
+	@CrossOrigin(origins = {"http://localhost:4200", "http://app.subjectivepersonality.com"})
+	@GetMapping("/type")
+	public Object opsRecordType(
+			@RequestParam(value = "maxRecords", defaultValue = "5") String maxRecords,
+			@RequestParam(value = "type", defaultValue = "") String typeString,
+			@RequestParam(value = "cm", defaultValue = "false") boolean includeCommunity) {
+		return airtableService.getAirtableRecordsByType(maxRecords, typeString, includeCommunity);
 	}
 }

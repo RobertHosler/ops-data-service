@@ -85,6 +85,25 @@ public class AirtableService {
         return result;
     }
 
+    public Root getAirtableRecordsByType(String maxRecords, String type, boolean includeCommunity) {
+        Map<String, String> variables = new HashMap<>();
+        variables.put("table", TABLE);
+        variables.put("view", VIEW);
+        variables.put("maxRecords", maxRecords);
+        variables.put("typeLabel", "{Type}");
+        variables.put("typeValue", type != null ? type.toUpperCase() : "");
+        String formula = "FIND('{typeValue}', UPPER({typeLabel}))";
+        String url = LIST_URL + PICTURE_FIELDS_PARAMS + "&filterByFormula=" + formula;
+        ResponseEntity<Root> response = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                new HttpEntity(createHeaders()),
+                Root.class,
+                variables);
+        Root result = processResponse(includeCommunity, response);
+        return result;
+    }
+
     private Root processResponse(boolean includeCommunity, ResponseEntity<Root> response) {
         Root result;
         if (!HttpStatus.OK.equals(response.getStatusCode())) {
