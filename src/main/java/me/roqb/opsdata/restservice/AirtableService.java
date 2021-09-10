@@ -3,6 +3,7 @@ package me.roqb.opsdata.restservice;
 import me.roqb.opsdata.restservice.entity.Root;
 import me.roqb.opsdata.restservice.entity.TypeRecord;
 import me.roqb.opsdata.restservice.settings.AirtableSettings;
+import me.roqb.opsdata.restservice.settings.CommunityInclusions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ public class AirtableService {
 
     private final RestTemplate restTemplate;
     private final AirtableSettings airTableSettings;
+    private final CommunityInclusions communityInclusions;
 
     private static final String AUTH_URL = "https://api.airtable.com/v0/appudq0aG1uwqIFX5/Officially%20Typed%20People?api_key={apiKey}";
     private static final String LIST_URL = "https://api.airtable.com/v0/appudq0aG1uwqIFX5/{table}?maxRecords={maxRecords}&view={view}";
@@ -30,9 +32,10 @@ public class AirtableService {
     private static final String PICTURE_FIELDS_PARAMS = MINIMUM_FIELDS_PARAMS + "&fields=Picture";
 
     @Autowired
-    public AirtableService(RestTemplate restTemplate, AirtableSettings airtableSettings) {
+    public AirtableService(RestTemplate restTemplate, AirtableSettings airtableSettings, CommunityInclusions communityInclusions) {
         this.restTemplate = restTemplate;
         this.airTableSettings = airtableSettings;
+        this.communityInclusions = communityInclusions;
     }
 
     public Object getAirtable() {
@@ -158,7 +161,14 @@ public class AirtableService {
     }
 
     private boolean isCommunity(TypeRecord record) {
-        return record.fields.tags.contains("Community Member");
+        return record.fields.tags.contains("Community Member") && !isIncludedCommunity(record);
+    }
+
+    /*
+     * Overrides the isCommunityMember exclusion and reincludes the member
+     */
+    private boolean isIncludedCommunity(TypeRecord record) {
+        return this.communityInclusions.getFileContents().contains(record.fields.name);
     }
 
     private HttpHeaders createHeaders() {
