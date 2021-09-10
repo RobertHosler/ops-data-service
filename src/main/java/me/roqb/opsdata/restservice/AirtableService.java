@@ -168,7 +168,11 @@ public class AirtableService {
      * Overrides the isCommunityMember exclusion and reincludes the member
      */
     private boolean isIncludedCommunity(TypeRecord record) {
-        return this.communityInclusions.getFileContents().contains(record.fields.name);
+        boolean isIncluded = this.communityInclusions.getFileContents().contains(record.fields.name);
+        if (isIncluded) {
+            record.fields.tags.add("Inclusions List");
+        }
+        return isIncluded;
     }
 
     private HttpHeaders createHeaders() {
