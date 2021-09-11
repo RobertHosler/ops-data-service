@@ -59,13 +59,7 @@ public class AirtableService {
         variables.put("view", VIEW);
         variables.put("maxRecords", maxRecords);
         String url = LIST_URL + PICTURE_FIELDS_PARAMS + "&filterByFormula=" + builder.buildFormula();
-        ResponseEntity<Root> response = restTemplate.exchange(
-                url,
-                HttpMethod.GET,
-                new HttpEntity(createHeaders()),
-                Root.class,
-                variables);
-        Root result = processResponse(includeCommunity, response);
+        Root result = getRoot(includeCommunity, variables, url);
         return result;
     }
 
@@ -78,14 +72,32 @@ public class AirtableService {
         variables.put("nameValue", name != null ? name.toUpperCase() : "");
         String formula = "FIND('{nameValue}', UPPER({nameLabel}))";
         String url = LIST_URL + PICTURE_FIELDS_PARAMS + "&filterByFormula=" + formula;
+        Root result = getRoot(includeCommunity, variables, url);
+        return result;
+    }
+
+    private Root getRoot(boolean includeCommunity, Map<String, String> variables, String url) {
+        return getRoot(includeCommunity, variables, url, null);
+    }
+
+    private Root getRoot(boolean includeCommunity, Map<String, String> variables, String url, String offset) {
+        String offsetUrl = StringUtils.hasLength(offset) ? url + "&offset={offsetValue}" : url;
+        System.out.println("offsetUrl: " + offsetUrl);
         ResponseEntity<Root> response = restTemplate.exchange(
-                url,
+                offsetUrl,
                 HttpMethod.GET,
                 new HttpEntity(createHeaders()),
                 Root.class,
                 variables);
-        Root result = processResponse(includeCommunity, response);
-        return result;
+        Root root = processResponse(includeCommunity, response);
+        System.out.println("offset: " + root.offset);
+        if (root.offset != null) {
+            variables.put("offsetValue", offset);
+            Root nextPage = getRoot(includeCommunity, variables, url, root.offset);
+            root.records.addAll(nextPage.records);
+        }
+        System.out.println("recordSize: " + root.records.size());
+        return root;
     }
 
     public Root getAirtableRecordsByType(String maxRecords, String type, boolean includeCommunity) {
@@ -97,20 +109,14 @@ public class AirtableService {
         variables.put("typeValue", type != null ? type.toUpperCase() : "");
         String formula = "FIND('{typeValue}', UPPER({typeLabel}))";
         String url = LIST_URL + PICTURE_FIELDS_PARAMS + "&filterByFormula=" + formula;
-        ResponseEntity<Root> response = restTemplate.exchange(
-                url,
-                HttpMethod.GET,
-                new HttpEntity(createHeaders()),
-                Root.class,
-                variables);
-        Root result = processResponse(includeCommunity, response);
+        Root result = getRoot(includeCommunity, variables, url);
         return result;
     }
 
     private Root processResponse(boolean includeCommunity, ResponseEntity<Root> response) {
         Root result;
-        if (!HttpStatus.OK.equals(response.getStatusCode())) {
-            result = null;//TODO: handle failure
+        if (!HttpStatus.OK.equals(response.getStatusCode()) || response.getBody() == null) {
+            result = new Root();//TODO: handle failure
             System.out.println(response);
         } else {
             result = new Root();
@@ -125,6 +131,7 @@ public class AirtableService {
                     result.records.add(record);
                 }
             }
+            result.offset = response.getBody().offset;
         }
         return result;
     }
@@ -151,13 +158,7 @@ public class AirtableService {
         variables.put("maxRecords", maxRecords);
         System.out.println(url);
         System.out.println(variables);
-        ResponseEntity<Root> response = restTemplate.exchange(
-                url,
-                HttpMethod.GET,
-                new HttpEntity(createHeaders()),
-                Root.class,
-                variables);
-        Root result = processResponse(includeCommunity, response);
+        Root result = getRoot(includeCommunity, variables, url);
         return result;
     }
 
