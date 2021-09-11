@@ -19,6 +19,7 @@ public class TenCoins {
     private String animalDominance; // info/energy
     private String sensoryModality;
     private String deModality;
+    private String sex;
 
     public String getPrimaryHumanNeed() {
         String need = null;
@@ -102,5 +103,16 @@ public class TenCoins {
             mod = "Masculine";
         }
         return mod;
+    }
+    public String getSex() {
+        String result = null;
+        if (this.sex == null)
+            result = null;
+        if (this.sex.startsWith("M")) {
+            result = "Male";
+        } else if (this.sex.startsWith("F")) {
+            result = "Female";
+        }
+        return result;
     }
 }

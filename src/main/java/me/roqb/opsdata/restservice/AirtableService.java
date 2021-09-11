@@ -143,6 +143,7 @@ public class AirtableService {
         builder.append("Energy vs Info Dom", tenCoins.getAnimalDominance());
         builder.append("De Sexual", tenCoins.getDeModality());
         builder.append("Sensory Sexual", tenCoins.getSensoryModality());
+        builder.append("Biological Sex", tenCoins.getSex());
         String url = LIST_URL + PICTURE_FIELDS_PARAMS + "&filterByFormula=" + builder.buildFormula();
         Map<String, String> variables = builder.getVariables();
         variables.put("table", TABLE);

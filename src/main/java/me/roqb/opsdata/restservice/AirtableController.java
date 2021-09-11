@@ -44,6 +44,7 @@ public class AirtableController {
 			@RequestParam(value = "dom", defaultValue = "") String dominance,
 			@RequestParam(value = "smod", defaultValue = "") String sensoryModality,
 			@RequestParam(value = "demod", defaultValue = "") String deModality,
+			@RequestParam(value = "sex", defaultValue = "") String sex,
 			@RequestParam(value = "cm", defaultValue = "false") boolean includeCommunity) {
 		TenCoins tenCoins = new TenCoins();
 		tenCoins.setPrimaryHumanNeed(needOne);
@@ -56,6 +57,7 @@ public class AirtableController {
 		tenCoins.setAnimalDominance(dominance);
 		tenCoins.setSensoryModality(sensoryModality);
 		tenCoins.setDeModality(deModality);
+		tenCoins.setSex(sex);
 		return airtableService.getAirtableCoins(maxRecords, tenCoins, includeCommunity);
 	}
 
