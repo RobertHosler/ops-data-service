@@ -83,7 +83,6 @@ public class AirtableService {
     private Root getRoot(boolean includeCommunity, Map<String, String> variables, String url, String offset) {
         String offsetUrl = StringUtils.hasLength(offset) ? url + "&offset={offsetValue}" : url;
         variables.put("offsetValue", offset);
-        System.out.println("offset: " + offset + " - " + variables.get("offsetValue"));
         ResponseEntity<Root> response = restTemplate.exchange(
                 offsetUrl,
                 HttpMethod.GET,
