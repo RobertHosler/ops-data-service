@@ -22,7 +22,7 @@ public class AirtableService {
     private final CommunityInclusions communityInclusions;
 
     private static final String AUTH_URL = "https://api.airtable.com/v0/appudq0aG1uwqIFX5/Officially%20Typed%20People?api_key={apiKey}";
-    private static final String LIST_URL = "https://api.airtable.com/v0/appudq0aG1uwqIFX5/{table}?maxRecords={maxRecords}&view={view}";
+    private static final String LIST_URL = "https://api.airtable.com/v0/appudq0aG1uwqIFX5/{table}?maxRecords={maxRecords}&pageSize=100&view={view}";
     private static final String DEFAULT_API_KEY = "defaultKey"; // defaultKey won't work
 
     private static final String TABLE = "Officially Typed People";
@@ -82,7 +82,8 @@ public class AirtableService {
 
     private Root getRoot(boolean includeCommunity, Map<String, String> variables, String url, String offset) {
         String offsetUrl = StringUtils.hasLength(offset) ? url + "&offset={offsetValue}" : url;
-        System.out.println("offsetUrl: " + offsetUrl);
+        variables.put("offsetValue", offset);
+        System.out.println("offset: " + offset + " - " + variables.get("offsetValue"));
         ResponseEntity<Root> response = restTemplate.exchange(
                 offsetUrl,
                 HttpMethod.GET,
@@ -90,13 +91,11 @@ public class AirtableService {
                 Root.class,
                 variables);
         Root root = processResponse(includeCommunity, response);
-        System.out.println("offset: " + root.offset);
         if (root.offset != null) {
-            variables.put("offsetValue", offset);
             Root nextPage = getRoot(includeCommunity, variables, url, root.offset);
-            root.records.addAll(nextPage.records);
+            nextPage.records.addAll(root.records);
+            root = nextPage;
         }
-        System.out.println("recordSize: " + root.records.size());
         return root;
     }
 
