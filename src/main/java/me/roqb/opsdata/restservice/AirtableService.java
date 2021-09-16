@@ -4,6 +4,7 @@ import me.roqb.opsdata.restservice.entity.Root;
 import me.roqb.opsdata.restservice.entity.TypeRecord;
 import me.roqb.opsdata.restservice.settings.AirtableSettings;
 import me.roqb.opsdata.restservice.settings.CommunityInclusions;
+import me.roqb.opsdata.restservice.settings.Exclusions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ public class AirtableService {
     private final RestTemplate restTemplate;
     private final AirtableSettings airTableSettings;
     private final CommunityInclusions communityInclusions;
+    private final Exclusions exclusions;
 
     private static final String AUTH_URL = "https://api.airtable.com/v0/appudq0aG1uwqIFX5/Officially%20Typed%20People?api_key={apiKey}";
     private static final String LIST_URL = "https://api.airtable.com/v0/appudq0aG1uwqIFX5/{table}?maxRecords={maxRecords}&pageSize=100&view={view}";
@@ -32,10 +34,12 @@ public class AirtableService {
     private static final String PICTURE_FIELDS_PARAMS = MINIMUM_FIELDS_PARAMS + "&fields=Picture";
 
     @Autowired
-    public AirtableService(RestTemplate restTemplate, AirtableSettings airtableSettings, CommunityInclusions communityInclusions) {
+    public AirtableService(RestTemplate restTemplate, AirtableSettings airtableSettings,
+                           CommunityInclusions communityInclusions, Exclusions exclusions) {
         this.restTemplate = restTemplate;
         this.airTableSettings = airtableSettings;
         this.communityInclusions = communityInclusions;
+        this.exclusions = exclusions;
     }
 
     public Object getAirtable() {
@@ -120,7 +124,7 @@ public class AirtableService {
             result = new Root();
             result.records = new ArrayList<>();
             for (TypeRecord record : response.getBody().records) {
-                if (record.fields.tags == null || includeCommunity || !isCommunity(record)) {
+                if (!isExcluded(record) && (record.fields.tags == null || includeCommunity || !isCommunity(record))) {
                     /*
                      * Only add records if:
                      * 1) there are no tags
@@ -173,6 +177,11 @@ public class AirtableService {
             record.fields.tags.add("Inclusions List");
         }
         return isIncluded;
+    }
+
+    private boolean isExcluded(TypeRecord record) {
+        boolean isExcluded = this.exclusions.getFileContents().contains(record.fields.name);
+        return isExcluded;
     }
 
     private HttpHeaders createHeaders() {

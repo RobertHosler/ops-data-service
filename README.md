@@ -17,4 +17,9 @@ Currently the Community Members from the database are excluded from the results 
 /tenCoins?cm=false&maxRecords=10&hn1=O&ohn=Oe&dhn=De&dl=F&ol=S&ia=Consume&ea=Play&dom=Energy&smod=F&demod=F
 
 ### Type Twins
+Pass in an OPS Type without modality
+* s1 - First Savior
+* s2 - Second Savior
+* as - Animal Stack
+
 /opsRecords?s1=Fe&s2=Se&as=PC/S(B)&cm=false&maxRecords=10
