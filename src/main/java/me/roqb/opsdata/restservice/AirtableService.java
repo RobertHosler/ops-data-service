@@ -6,6 +6,7 @@ import me.roqb.opsdata.restservice.settings.AirtableSettings;
 import me.roqb.opsdata.restservice.settings.CommunityInclusions;
 import me.roqb.opsdata.restservice.settings.Exclusions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -53,6 +54,7 @@ public class AirtableService {
         return result;
     }
 
+    @Cacheable("twinRoot")
     public Root getAirtableRecords(String maxRecords, String saviorOne, String saviorTwo, String animalStack, boolean includeCommunity) {
         FormulaBuilder builder = new FormulaBuilder();
         builder.append("First Savior Function", saviorOne);
@@ -64,9 +66,11 @@ public class AirtableService {
         variables.put("maxRecords", maxRecords);
         String url = LIST_URL + PICTURE_FIELDS_PARAMS + "&filterByFormula=" + builder.buildFormula();
         Root result = getRoot(includeCommunity, variables, url);
+
         return result;
     }
 
+    @Cacheable("nameRoot")
     public Root getAirtableRecordsByName(String maxRecords, String name, boolean includeCommunity) {
         Map<String, String> variables = new HashMap<>();
         variables.put("table", TABLE);
@@ -102,6 +106,7 @@ public class AirtableService {
         return root;
     }
 
+    @Cacheable("typeRoot")
     public Root getAirtableRecordsByType(String maxRecords, String type, boolean includeCommunity) {
         Map<String, String> variables = new HashMap<>();
         variables.put("table", TABLE);
@@ -138,6 +143,7 @@ public class AirtableService {
         return result;
     }
 
+    @Cacheable("coinRoot")
     public Root getAirtableCoins(String maxRecords,
                                  TenCoins tenCoins,
                                  boolean includeCommunity) {
