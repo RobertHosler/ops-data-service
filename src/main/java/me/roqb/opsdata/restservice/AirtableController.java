@@ -12,14 +12,14 @@ public class AirtableController {
 	@Autowired
 	private AirtableService airtableService;
 
-	@CrossOrigin(origins = {"http://localhost:4200", "http://app.subjectivepersonality.com", "https://sp-app-qa.herokuapp.com"})
+	@CrossOrigin(origins = {"http://localhost:4200", "http://app.subjectivepersonality.com", "https://app.subjectivepersonality.com", "https://sp-app-qa.herokuapp.com"})
 	@GetMapping("/airtable")
 	public Object airtable() {
 		return airtableService.getAirtable();
 	}
 
 	// Type Twins
-	@CrossOrigin(origins = {"http://localhost:4200", "http://app.subjectivepersonality.com", "https://sp-app-qa.herokuapp.com"})
+	@CrossOrigin(origins = {"http://localhost:4200", "http://app.subjectivepersonality.com", "https://app.subjectivepersonality.com", "https://sp-app-qa.herokuapp.com"})
 	@GetMapping("/opsRecords")
 	public Object opsRecords(
 			@RequestParam(value = "maxRecords", defaultValue = "5") String maxRecords,
@@ -30,7 +30,7 @@ public class AirtableController {
 		return airtableService.getAirtableRecords(maxRecords, saviorOne, saviorTwo, animalStack, includeCommunity);
 	}
 
-	@CrossOrigin(origins = {"http://localhost:4200", "http://app.subjectivepersonality.com", "https://sp-app-qa.herokuapp.com"})
+	@CrossOrigin(origins = {"http://localhost:4200", "http://app.subjectivepersonality.com", "https://app.subjectivepersonality.com", "https://sp-app-qa.herokuapp.com"})
 	@GetMapping("/tenCoins")
 	public Object tenCoins(
 			@RequestParam(value = "maxRecords", defaultValue = "5") String maxRecords,
@@ -61,7 +61,7 @@ public class AirtableController {
 		return airtableService.getAirtableCoins(maxRecords, tenCoins, includeCommunity);
 	}
 
-	@CrossOrigin(origins = {"http://localhost:4200", "http://app.subjectivepersonality.com", "https://sp-app-qa.herokuapp.com"})
+	@CrossOrigin(origins = {"http://localhost:4200", "http://app.subjectivepersonality.com", "https://app.subjectivepersonality.com", "https://sp-app-qa.herokuapp.com" })
 	@GetMapping("/name")
 	public Object opsRecordName(
 			@RequestParam(value = "maxRecords", defaultValue = "5") String maxRecords,
@@ -70,7 +70,7 @@ public class AirtableController {
 		return airtableService.getAirtableRecordsByName(maxRecords, nameString, includeCommunity);
 	}
 
-	@CrossOrigin(origins = {"http://localhost:4200", "http://app.subjectivepersonality.com", "https://sp-app-qa.herokuapp.com"})
+	@CrossOrigin(origins = {"http://localhost:4200", "http://app.subjectivepersonality.com", "https://app.subjectivepersonality.com", "https://sp-app-qa.herokuapp.com"})
 	@GetMapping("/type")
 	public Object opsRecordType(
 			@RequestParam(value = "maxRecords", defaultValue = "5") String maxRecords,
